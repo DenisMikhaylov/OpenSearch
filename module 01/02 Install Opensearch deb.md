@@ -51,7 +51,11 @@ echo "deb [signed-by=/usr/share/keyrings/opensearch-keyring] https://artifacts.o
 ```bash
 sudo apt update
 ```
+Если не отработает
 
+```
+curl -SLO https://artifacts.opensearch.org/releases/bundle/opensearch/3.7.0/opensearch-3.7.0-linux-x64.deb
+```
 **2.4 Установка OpenSearch**
 Начиная с версии 2.12, установка требует задания пароля для встроенного администратора `admin` для настройки демонстрационной конфигурации безопасности . Задайте пароль (замените `<custom-admin-password>` на свой пароль) и установите пакет:
 ```bash
