@@ -36,14 +36,17 @@ echo "vm.max_map_count=262144" | sudo tee -a /etc/sysctl.conf
 **2.1 Импорт GPG-ключа**
 Для верификации подлинности пакетов импортируйте официальный GPG-ключ OpenSearch:
 ```bash
-curl -o- https://artifacts.opensearch.org/publickeys/opensearch.pgp | sudo gpg --dearmor --batch --yes -o /usr/share/keyrings/opensearch-keyring
+sudo mkdir -p /etc/apt/keyrings
+```
+```
+curl -fsSL https://artifacts.opensearch.org/publickeys/opensearch-release.pgp | sudo gpg --dearmor -o /etc/apt/keyrings/opensearch.gpg
 ```
 Данный ключ используется для проверки подписи репозитория APT .
 
 **2.2 Добавление APT-репозитория**
 Для установки последней версии OpenSearch добавьте репозиторий для ветки 3.x:
 ```bash
-echo "deb [signed-by=/usr/share/keyrings/opensearch-keyring] https://artifacts.opensearch.org/releases/bundle/opensearch/3.x/apt stable main" | sudo tee /etc/apt/sources.list.d/opensearch-3.x.list
+echo "deb [signed-by=/etc/apt/keyrings/opensearch.gpg] https://artifacts.opensearch.org/releases/bundle/opensearch/3.x/apt stable main" | sudo tee /etc/apt/sources.list.d/opensearch-3.x.list
 ```
 
 **2.3 Обновление индекса пакетов**
