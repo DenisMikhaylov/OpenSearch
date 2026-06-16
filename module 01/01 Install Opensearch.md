@@ -21,8 +21,9 @@
    
 #### **Шаг 2: Установка Docker и Docker Compose**
 
-sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
+```
+apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
 
 #### **Шаг 3: Запуск OpenSearch кластера**
 
