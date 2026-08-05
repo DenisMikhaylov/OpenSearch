@@ -178,7 +178,7 @@ filter {
 output {
   # Отправка в OpenSearch через HAProxy (единая точка входа)
   opensearch {
-    hosts       => ["http://haproxy:9200"]
+    hosts       => ["https://haproxy:9200"]
     user        => "admin"
     password    => "MyStrongPassword123!"
     index       => "syslog-logs-%{+YYYY.MM.dd}"
