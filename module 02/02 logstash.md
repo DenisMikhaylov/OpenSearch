@@ -108,7 +108,7 @@ filter {
 
 output {
   opensearch {
-    hosts       => ["http://opensearch-node1:9200"]
+    hosts       => ["https://opensearch-node1:9200"]
     user        => "admin"
     password    => "MyStrongPassword123!" # Должен совпадать с паролем в OpenSearch
     index       => "web-logs-%{+YYYY.MM.dd}"
