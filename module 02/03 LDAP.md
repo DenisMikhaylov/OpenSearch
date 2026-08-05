@@ -130,7 +130,7 @@ sudo ldapsearch -x -b "dc=corp,dc=local" "(objectClass=*)"
 **Важно:** Замените `"10.0.XXX.XXX:389"` на реальный IP-адрес вашей ВМ с LDAP-сервером.
 
 ```bash
-curl -X PUT "https://localhost:9200/_plugins/_security/api/securityconfig/config" \
+curl -X PUT "http://localhost:9200/_plugins/_security/api/securityconfig/config" \
      -u 'admin:MyStrongPassword123!' \
      -k \
      -H 'Content-Type: application/json' \
