@@ -346,11 +346,16 @@ GET _cat/shards/test-failover?v&h=index,shard,prirep,node,state
 #### Шаг 2. Создание дашборда для мониторинга
 
 1. В OpenSearch Dashboards создайте визуализации:
-   - **Pie chart** — распределение шардов по узлам.
-   
-   Vega  
-   ```json
-   {
+   - **Pie chart** — распределение шардов по узлам.  
+   - **Line chart** — количество запросов в секунду.
+   - **Metric** — общее количество документов.
+
+3. Объедините их в дашборд **Cluster Health Dashboard**.
+
+**Пример спецификации Vega-Lite:**
+
+```json
+{
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "data": {
     "url": {
@@ -378,18 +383,4 @@ GET _cat/shards/test-failover?v&h=index,shard,prirep,node,state
   },
   "config": {"view": {"stroke": null}}
 }
-   ```
-     
-   - **Line chart** — количество запросов в секунду.
-   - **Metric** — общее количество документов.
-
-3. Объедините их в дашборд **Cluster Health Dashboard**.
-
-
-
-
-**Ключевые выводы:**
-- Реплики критически важны для отказоустойчивости.
-- Три cluster manager узла — минимальная конфигурация для production.
-- Выделенные search-узлы улучшают производительность и изолируют нагрузки.
-- OpenSearch автоматически перераспределяет шарды при сбоях.
+```
