@@ -349,7 +349,7 @@ GET _cat/shards/test-failover?v&h=index,shard,prirep,node,state
    - **Pie chart** — распределение шардов по узлам.
    
    Vega  
-   ```
+   ```json
    {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "data": {
