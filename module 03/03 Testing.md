@@ -352,7 +352,7 @@ GET _cat/shards/test-failover?v&h=index,shard,prirep,node,state
 
 3. Объедините их в дашборд **Cluster Health Dashboard**.
 
-**Пример спецификации Vega-Lite:**
+**Pie chart: Vega**
 
 ```json
 {
@@ -382,5 +382,123 @@ GET _cat/shards/test-failover?v&h=index,shard,prirep,node,state
     ]
   },
   "config": {"view": {"stroke": null}}
+}
+```
+
+
+### 📊 Пример спецификации Vega-Lite для QPS
+
+Эта спецификация делает следующее:
+1.  Выполняет запрос к API `/_nodes/stats` для получения статистики по запросам за последний час.
+2.  Извлекает временные метки и количество запросов из данных каждого узла.
+3.  Строит линейный график, отображающий общее количество запросов в секунду по времени.
+
+```json
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Количество запросов в секунду (QPS)",
+  "data": {
+    "url": {
+      "%context%": true,
+      "%timefield%": "timestamp",
+      "index": "_all",
+      "body": {
+        "size": 0,
+        "aggs": {
+          "queries_over_time": {
+            "date_histogram": {
+              "field": "@timestamp",
+              "fixed_interval": "1s",
+              "min_doc_count": 0,
+              "extended_bounds": {
+                "min": "%timefilter%:min",
+                "max": "%timefilter%:max"
+              }
+            }
+          }
+        }
+      }
+    },
+    "format": {
+      "property": "aggregations.queries_over_time.buckets"
+    }
+  },
+  "transform": [
+    {
+      "calculate": "datum.key",
+      "as": "timestamp"
+    },
+    {
+      "calculate": "datum.doc_count",
+      "as": "queries"
+    }
+  ],
+  "mark": {
+    "type": "line",
+    "point": true,
+    "tooltip": true
+  },
+  "encoding": {
+    "x": {
+      "field": "timestamp",
+      "type": "temporal",
+      "axis": {
+        "title": "Время"
+      }
+    },
+    "y": {
+      "field": "queries",
+      "type": "quantitative",
+      "axis": {
+        "title": "Количество запросов"
+      },
+      "scale": {
+        "zero": true
+      }
+    }
+  },
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  }
+}
+```
+
+
+### ⚙️ Альтернативный подход: использование `_nodes/stats`
+
+Если вы хотите получить более точные данные о пропускной способности запросов от самого движка OpenSearch, можно использовать API статистики узлов:
+
+```json
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "QPS из статистики узлов",
+  "data": {
+    "url": {
+      "%context%": true,
+      "path": "/_nodes/stats"
+    },
+    "format": {
+      "property": "nodes"
+    }
+  },
+  "transform": [
+    {
+      "flatten": ["nodes.*.indices.search.query_total"]
+    }
+  ],
+  "mark": "line",
+  "encoding": {
+    "x": {
+      "field": "timestamp",
+      "type": "temporal"
+    },
+    "y": {
+      "aggregate": "sum",
+      "field": "nodes.*.indices.search.query_total",
+      "type": "quantitative"
+    }
+  }
 }
 ```
