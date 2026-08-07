@@ -318,10 +318,10 @@ curl -X POST "http://localhost:9200/nginx-logs-prod/_bulk?pretty&refresh" \
 
 **Пример файла `bulk_logs.json`:**
 ```json
-{"index":{}}
-{"clientip":"192.168.1.1","timestamp":"10/Oct/2024:13:55:36 +0000","verb":"GET","request":"/index.html","httpversion":"1.1","response":200,"bytes":612,"referrer":"-","agent":"Mozilla/5.0"}
-{"index":{}}
-{"clientip":"192.168.1.2","timestamp":"10/Oct/2024:13:56:10 +0000","verb":"POST","request":"/api/login","httpversion":"1.1","response":401,"bytes":45,"referrer":"-","agent":"curl/7.68.0"}
+{"create":{}}
+{"@timestamp":"2024-10-10T13:55:36Z","clientip":"192.168.1.1","timestamp":"10/Oct/2024:13:55:36 +0000","verb":"GET","request":"/index.html","httpversion":"1.1","response":200,"bytes":612,"referrer":"-","agent":"Mozilla/5.0"}
+{"create":{}}
+{"@timestamp":"2024-10-10T13:56:10Z","clientip":"192.168.1.2","timestamp":"10/Oct/2024:13:56:10 +0000","verb":"POST","request":"/api/login","httpversion":"1.1","response":401,"bytes":45,"referrer":"-","agent":"curl/7.68.0"}
 ```
 
 ### 4.4. Поиск в потоке данных
