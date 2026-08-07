@@ -282,6 +282,7 @@ curl -X PUT "http://localhost:9200/_data_stream/nginx-logs-prod"
 curl -X POST "http://localhost:9200/nginx-logs-prod/_doc" \
   -H "Content-Type: application/json" \
   -d '{
+  "@timestamp":"2024-10-10T13:55:36Z",
   "clientip": "192.168.1.1",
   "timestamp": "10/Oct/2024:13:55:36 +0000",
   "verb": "GET",
