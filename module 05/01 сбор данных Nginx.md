@@ -335,7 +335,7 @@ curl -X GET "http://localhost:9200/nginx-logs-prod/_search" \
   -d '{
   "query": {
     "range": {
-      "timestamp": {
+      "@timestamp": {
         "gte": "2024-10-01",
         "lt": "2024-11-01"
       }
@@ -373,19 +373,20 @@ curl -X POST "http://localhost:9200/nginx-logs-prod/_rollover"
 ```bash
 curl -X POST "http://localhost:9200/_reindex" \
   -H "Content-Type: application/json" \
-  -d '{
+  -d '
+  {
   "source": {
-    "index": "nginx-logs-prod"
+    "index": "nginx-logs-prod",
+    "query": {
+      "range": {
+        "@timestamp": {
+          "lt": "2024-01-01T00:00:00Z"
+        }
+      }
+    }
   },
   "dest": {
     "index": "nginx-logs-archive"
-  },
-  "query": {
-    "range": {
-      "timestamp": {
-        "lt": "2024-01-01"
-      }
-    }
   }
 }'
 ```
